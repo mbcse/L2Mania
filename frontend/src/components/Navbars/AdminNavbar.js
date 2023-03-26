@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -48,7 +48,9 @@ const AdminNavbar = (props) => {
                   </InputGroupText>
                 </InputGroupAddon>
                 <Input placeholder={props.searchTx} type="text" value={props.searchTx} onChange={
-                  e => props.setSearch(e.target.value)
+                  (e) => {
+                    props.setSearch(e.target.value);
+                  }
                 } 
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
