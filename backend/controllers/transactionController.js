@@ -344,6 +344,7 @@ const getPolygonZkEvmTestnetTx = async (txHash) => {
 export const getTransactionDetails = async (req, res) => {
   try {
     const { txHash } = req.body
+    console.log(req.body)
 
     const [opData, eraData, taikoData, zkevmData, mantleData, scrollData] = await Promise.all([
       getOptimismTx(txHash),

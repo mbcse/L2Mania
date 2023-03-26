@@ -19,12 +19,11 @@ const Admin = (props) => {
   const { address, isConnected } = useAccount()
   const { disconnect } = useDisconnect()
 
-
   const mainContent = React.useRef(null);
   const location = useLocation();
 
   const [searchTx, setSearchTx] = useState()
-
+  const [showSearch, setShowSearch] = useState(false)
   const setSearch = (txHash) => {
     setSearchTx(txHash)
     console.log(searchTx)
@@ -32,8 +31,10 @@ const Admin = (props) => {
 
   }
 
-  const handleSearch = (txHash) => {
-    window.location.href='/admin/transactionsearch'
+  const handleSearch = () => {
+    setShowSearch(true)
+    console.log(showSearch)
+    // window.location.href='/admin/transactionsearch'
   }
 
   React.useEffect(() => {
@@ -92,8 +93,9 @@ const Admin = (props) => {
         />
         <Switch>
           {getRoutes(routes)}
-          <Redirect from="*" to="/admin/index" />
+          {showSearch? <Redirect from="*" to="/admin/transactionsearch" /> :<Redirect from="*" to="/admin/index" />}
         </Switch>
+        {showSearch? <Redirect from="*" to="/admin/transactionsearch" /> :<Redirect from="*" to="/admin/index" />}
         <Container fluid>
           <AdminFooter />
         </Container>
