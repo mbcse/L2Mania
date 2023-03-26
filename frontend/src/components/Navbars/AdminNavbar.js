@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 // reactstrap components
@@ -28,6 +29,7 @@ const AdminNavbar = (props) => {
   const { disconnect } = useDisconnect()
 
   return (
+
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
         <Container fluid>
@@ -45,7 +47,17 @@ const AdminNavbar = (props) => {
                     <i className="fas fa-search" />
                   </InputGroupText>
                 </InputGroupAddon>
-                <Input placeholder="Search" type="text" />
+                <Input placeholder={props.searchTx} type="text" value={props.searchTx} onChange={
+                  e => props.setSearch(e.target.value)
+                } 
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    console.log('do validate');
+                    props.handleSearch()
+                  }
+                }}
+                />
               </InputGroup>
             </FormGroup>
           </Form>

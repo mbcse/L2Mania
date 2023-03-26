@@ -13,7 +13,7 @@ import {
   Col
 } from "reactstrap";
 
-const LandingNavbar = () => {
+const WalletAuthNavbar = () => {
   return (
     <>
       <Navbar className="navbar-top navbar-horizontal navbar-dark" expand="md">
@@ -88,4 +88,4 @@ const LandingNavbar = () => {
   );
 };
 
-export default LandingNavbar;
+export default WalletAuthNavbar;

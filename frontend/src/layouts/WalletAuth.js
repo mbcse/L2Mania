@@ -5,12 +5,12 @@ import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 
 // core components
-import LandingNavbar from "components/Navbars/LandingNavbar.js";
+import WalletAuthNavbar from "components/Navbars/WalletAuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
 import routes from "routes.js";
 
-const LandingPage = (props) => {
+const WalletAuthPage = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
 
@@ -45,7 +45,7 @@ const LandingPage = (props) => {
   return (
     <>
       <div className="main-content" ref={mainContent}>
-        <LandingNavbar />
+        <WalletAuthNavbar />
         <div className="header bg-gradient-info py-7 py-lg-8">
           <Container>
             <div className="header-body text-center mb-7">
@@ -90,4 +90,4 @@ const LandingPage = (props) => {
   );
 };
 
-export default LandingPage;
+export default WalletAuthPage;

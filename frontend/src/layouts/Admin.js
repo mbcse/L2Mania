@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { createContext, useState } from "react";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
@@ -12,14 +12,29 @@ import routes from "routes.js";
 
 import { useAccount, useDisconnect } from 'wagmi'
 
+export const searchContext = createContext()
 
 const Admin = (props) => {
 
   const { address, isConnected } = useAccount()
   const { disconnect } = useDisconnect()
-  
+
+
   const mainContent = React.useRef(null);
   const location = useLocation();
+
+  const [searchTx, setSearchTx] = useState()
+
+  const setSearch = (txHash) => {
+    setSearchTx(txHash)
+    console.log(searchTx)
+    Redirect('/admin/transactionsearch')
+
+  }
+
+  const handleSearch = (txHash) => {
+    window.location.href='/admin/transactionsearch'
+  }
 
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -33,9 +48,9 @@ const Admin = (props) => {
         return (
           <Route
             path={prop.layout + prop.path}
-            component={prop.component}
             key={key}
-          />
+            component={prop.component}
+            />
         );
       } else {
         return null;
@@ -57,6 +72,7 @@ const Admin = (props) => {
 
   return (
     <>
+    <searchContext.Provider value={searchTx}>
       <Sidebar
         {...props}
         routes={routes}
@@ -70,6 +86,9 @@ const Admin = (props) => {
         <AdminNavbar
           {...props}
           brandText={getBrandText(props.location.pathname)}
+          handleSearch={handleSearch}
+          searchTx = {searchTx}
+          setSearch= {setSearch}
         />
         <Switch>
           {getRoutes(routes)}
@@ -79,6 +98,7 @@ const Admin = (props) => {
           <AdminFooter />
         </Container>
       </div>
+      </searchContext.Provider>
     </>
   );
 };

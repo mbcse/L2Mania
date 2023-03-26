@@ -20,7 +20,7 @@ import { useAccount, useDisconnect } from 'wagmi'
 import { Web3Button } from '@web3modal/react'
 import { Web3NetworkSwitch } from '@web3modal/react'
 
-const Landing = () => {
+const WalletAuth = () => {
 
   const { address, isConnected } = useAccount()
   const { disconnect } = useDisconnect()
@@ -115,4 +115,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default WalletAuth;
