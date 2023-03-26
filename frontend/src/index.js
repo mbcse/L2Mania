@@ -9,7 +9,7 @@ import "assets/scss/argon-dashboard-react.scss";
 
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
-import LandingLayout from "layouts/LandingPage.js";
+import WalletAuthLayout from "layouts/WalletAuth.js";
 
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Modal } from '@web3modal/react'
@@ -35,7 +35,7 @@ root.render(
   <WagmiConfig client={wagmiClient}>
   <BrowserRouter>
     <Switch>
-      <Route path="/landing" render={(props) => <LandingLayout {...props} />} />
+      <Route path="/landing" render={(props) => <WalletAuthLayout {...props} />} />
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
       <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
       <Redirect from="/" to="/landing" />

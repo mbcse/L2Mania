@@ -1,0 +1,13 @@
+src
+node_modules
+.eslintignore
+.eslintrc.yml
+.gitignore
+fix.js
+.git
+setup
+.package-lock.json
+jestSetup.js
+test
+jest.config.mjs
+coverage
