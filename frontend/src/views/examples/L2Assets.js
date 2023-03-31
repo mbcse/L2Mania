@@ -37,7 +37,9 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import config from "../../config";
 
-import { useAccount } from "wagmi";
+import { useAccount , useSigner} from "wagmi";
+import { depositERC20, withdrawERC20, setup} from '../../../../l2maniaSdk/src/services/l2Services/optimisim'
+import { bridgeToZkEvm, withdrawFromZkEvm} from '../../../../l2maniaSdk/src/services/l2Services/polygon-zkevm'
 
 const L2Assets = () => {
   const { address, isConnected } = useAccount()
@@ -52,7 +54,20 @@ const L2Assets = () => {
     return chainData.data.data
   }
 
-
+  const { data: signer, isError, isLoading } = useSigner()
+  const [fromChain, setFromChain] = useState("")
+  const [toChain, setToChain] = useState("")
+  const [tokenAddress, setTokenAddress] = useState('')
+  const [amount, setAmount] = useState('')
+  const [bridgeAmount, setBridgeAmount] = useState(0)
+  const onBridgeAsset = async (fromChain, toChain, tokenAddress, amount) => {
+    await setup(signer)
+    if(fromChain === 'polygon_zkevm' && toChain === 'optimism'){
+      withdrawFromZkEvm(address, tokenAddress, amount) //withdraw from zkevm to eth
+      depositERC20(tokenAddress) // transfer to optimisim by deposting eth
+    }
+    toggle()
+  } 
 
   useEffect(() => {
     async function getAllChainData() {
@@ -172,7 +187,12 @@ const L2Assets = () => {
                               </DropdownMenu>
                             </UncontrolledDropdown> */}
 
-                            <Button className="btn-danger" onClick={toggle}>Withdraw/Transfer</Button>
+                            <Button className="btn-danger" onClick={(e)=>{
+                              e.preventDefault()
+                              setTokenAddress(asset.contract_address)
+                              setFromChain(chainData.chain_name)
+                              toggle()
+                            }}>Withdraw/Transfer</Button>
                           </td>
                         </tr>
                       )
@@ -371,20 +391,21 @@ const L2Assets = () => {
                       <i className="ni ni-dollar-3" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Amount" type="text" />
+                  <Input placeholder="Amount" type="text" onChange={setBridgeAmount(e.target.value)} />
                 </InputGroup>
               </FormGroup>
               <FormGroup>
-                    <Input type="select" name="select" id="exampleSelect">
-                    <option>Optimism</option>
-                    <option>Ethereum</option>
-                    <option>ZkSync Era</option>
-                    <option>Taiko</option>
-                    <option>Polygon ZkEvm</option>
-                    <option>Gnosis</option>
-                    <option>Mantle</option>
-                    <option>Polygon</option>
-                    <option>Scroll</option>
+                    <Input type="select" name="select" id="exampleSelect" >
+                    <option onClick={setToChain("Optimism")}
+                    >Optimism</option>
+                    <option onClick={setToChain("ethereum")}>Ethereum</option>
+                    <option onClick={setToChain("ZkSync Era")}>ZkSync Era</option>
+                    <option onClick={setToChain("taiko")}>Taiko</option>
+                    <option onClick={setToChain("polygon_zkevm")}>Polygon ZkEvm</option>
+                    <option onClick={setToChain("gnosis")}>Gnosis</option>
+                    <option onClick={setToChain("mantle")}>Mantle</option>
+                    <option onClick={setToChain("polygon")}>Polygon</option>
+                    <option onClick={setToChain("scroll")}>Scroll</option>
                   </Input>
               </FormGroup>
               {/* <FormGroup>
@@ -425,7 +446,7 @@ const L2Assets = () => {
                 </Col>
               </Row>
               <div className="text-center">
-                <Button className="mt-4" color="primary" type="button">
+                <Button className="mt-4" color="primary" type="button"  onClick={onBridgeAsset}>
                   Transfer
                 </Button>
               </div>
