@@ -29,7 +29,6 @@ const Login = () => {
                     href=""
                     target="_blank"
                   >
-                    Creative Tim
                   </NavLink>
                 </NavItem>
                 <NavItem>

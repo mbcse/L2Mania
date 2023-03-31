@@ -384,11 +384,11 @@ let chartExample2 = {
     }
   },
   data: {
-    labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: ["Ethereum", "Polygon", "Gnosis", "Optimism", "Zksync Era", "Taiko", "Polygon ZkEvm", "Mantle", "Scroll"],
     datasets: [
       {
-        label: "Sales",
-        data: [25, 20, 30, 22, 17, 29],
+        label: "Gas Price In Gwei",
+        data: [27, 272, 3, 0.0010, 0.4069, 23.5956, 35.5000, 0.0000, 0.0010],
         maxBarThickness: 10
       }
     ]

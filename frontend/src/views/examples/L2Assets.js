@@ -5,7 +5,15 @@ import {
   Card,
   CardHeader,
   CardFooter,
+  CardBody,
+  FormGroup,
+  Form,
+  InputGroup,
+  InputGroupAddon,
   DropdownMenu,
+  InputGroupText,
+  Col,
+  Input,
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
@@ -18,7 +26,10 @@ import {
   Container,
   Row,
   UncontrolledTooltip,
-  Button
+  Button,
+  Modal,
+  ModalBody, 
+  ModalFooter, ModalHeader
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
@@ -31,6 +42,8 @@ import { useAccount } from "wagmi";
 const L2Assets = () => {
   const { address, isConnected } = useAccount()
   let [l2AssetData, updateL2AssetData] = useState([])
+  const [modal, setModal] = useState(false);
+  const toggle = () => setModal(!modal);
 
   const assetData = []
 
@@ -69,7 +82,7 @@ const L2Assets = () => {
             if(index%2 === 0){
               return (
                 <Row key={index}>
-          <div className="col">
+          <div className="col mt-5">
             <Card className="shadow">
               <CardHeader className="border-0">
                 <h3 className="mb-0 text-danger">Your {chainData.chain_name} ( chainId: {chainData.chain_id}) Assets</h3>
@@ -159,7 +172,7 @@ const L2Assets = () => {
                               </DropdownMenu>
                             </UncontrolledDropdown> */}
 
-                            <Button className="btn-danger">Withdraw/Transfer</Button>
+                            <Button className="btn-danger" onClick={toggle}>Withdraw/Transfer</Button>
                           </td>
                         </tr>
                       )
@@ -226,7 +239,7 @@ const L2Assets = () => {
             }else {
               return (
         <Row className="mt-5">
-        <div className="col">
+        <div className="col mt-5">
           <Card className="bg-default shadow">
             <CardHeader className="bg-transparent border-0">
               <h3 className="text-white mb-0">Your {chainData.chain_name} ( chainId: {chainData.chain_id}) Assets</h3>
@@ -317,7 +330,7 @@ const L2Assets = () => {
                               </DropdownMenu>
                             </UncontrolledDropdown> */}
 
-                            <Button className="btn-danger">Withdraw/Transfer</Button>
+                            <Button className="btn-danger" onClick={toggle}>Withdraw/Transfer</Button>
                           </td>
                         </tr>
                       )
@@ -337,6 +350,93 @@ const L2Assets = () => {
         
       
       </Container>
+      <Modal isOpen={modal} toggle={toggle}>
+                <ModalHeader toggle={toggle}>
+                  Bridge/Transfer Asset
+                </ModalHeader>
+                <ModalBody>
+                <Card className="bg-secondary shadow border-0">
+          <CardHeader className="bg-transparent pb-5">
+              <h1 className="text-center">Transfer Asset</h1>
+          </CardHeader>
+          <CardBody className="px-lg-5 py-lg-5">
+            <div className="text-center text-muted mb-4">
+              <small>Enter Details</small>
+            </div>
+            <Form role="form">
+              <FormGroup>
+                <InputGroup className="input-group-alternative mb-3">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-dollar-3" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input placeholder="Amount" type="text" />
+                </InputGroup>
+              </FormGroup>
+              <FormGroup>
+                    <Input type="select" name="select" id="exampleSelect">
+                    <option>Optimism</option>
+                    <option>Ethereum</option>
+                    <option>ZkSync Era</option>
+                    <option>Taiko</option>
+                    <option>Polygon ZkEvm</option>
+                    <option>Gnosis</option>
+                    <option>Mantle</option>
+                    <option>Polygon</option>
+                    <option>Scroll</option>
+                  </Input>
+              </FormGroup>
+              {/* <FormGroup>
+                <InputGroup className="input-group-alternative">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-lock-circle-open" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    placeholder="Password"
+                    type="password"
+                    autoComplete="new-password"
+                  />
+                </InputGroup>
+              </FormGroup> */}
+             
+              <Row className="my-4">
+                <Col xs="12">
+                  <div className="custom-control custom-control-alternative custom-checkbox">
+                    <input
+                      className="custom-control-input"
+                      id="customCheckRegister"
+                      type="checkbox"
+                    />
+                    <label
+                      className="custom-control-label"
+                      htmlFor="customCheckRegister"
+                    >
+                      <span className="text-muted">
+                        I agree with the{" "}
+                        <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                          Privacy Policy
+                        </a>
+                      </span>
+                    </label>
+                  </div>
+                </Col>
+              </Row>
+              <div className="text-center">
+                <Button className="mt-4" color="primary" type="button">
+                  Transfer
+                </Button>
+              </div>
+            </Form>
+          </CardBody>
+        </Card>
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="primary" onClick={toggle}>Cancel</Button>
+                </ModalFooter>
+            </Modal>
     </>
   );
 };
