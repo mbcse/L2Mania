@@ -60,7 +60,7 @@ const L2Assets = () => {
   const [tokenAddress, setTokenAddress] = useState('')
   const [amount, setAmount] = useState('')
   const [bridgeAmount, setBridgeAmount] = useState(0)
-  const onBridgeAsset = async (fromChain, toChain, tokenAddress, amount) => {
+  const onBridgeAsset = async () => {
     await setup(signer)
     if(fromChain === 'polygon_zkevm' && toChain === 'optimism'){
       withdrawFromZkEvm(address, tokenAddress, amount) //withdraw from zkevm to eth
